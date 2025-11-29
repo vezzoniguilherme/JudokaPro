@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Judoka Pro - Aprenda Judô como um Videogame</title>
     <meta name="description" content="Judoka Pro: O app gamificado para aprender judô. Streaks, missões, rankings e comunidade. Inscreva-se na lista de espera e garanta condições diferenciadas.">
+    
+    <!-- META TAGS PARA REDES SOCIAIS (ADICIONADO) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vezzoniguilherme.github.io/JudokaPro/">
+    <meta property="og:title" content="Judoka Pro - Aprenda Judô como um Videogame">
+    <meta property="og:description" content="O app gamificado para aprender judô. Streaks, missões e rankings. Inscreva-se na lista de espera!">
+    <meta property="og:image" content="https://vezzoniguilherme.github.io/JudokaPro/assets/social-preview.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://vezzoniguilherme.github.io/JudokaPro/">
+    <meta name="twitter:title" content="Judoka Pro - Aprenda Judô como um Videogame">
+    <meta name="twitter:description" content="O app gamificado para aprender judô. Streaks, missões e rankings.">
+    <meta name="twitter:image" content="https://vezzoniguilherme.github.io/JudokaPro/assets/social-preview.jpg">
+    <!-- FIM DAS META TAGS -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -311,7 +327,7 @@
     <section class="section-spacing bg-white fade-in" id="about">
         <div class="max-w-3xl mx-auto text-center">
             <span class="badge badge-light mb-4 inline-block">Nosso Propósito</span>
-            <h2 class="text-5xl md:text-6xl font-bold mb-8">Reimaginar judô para o mundo moderno</h2>
+            <h2 class="text-5xl md:text-6xl font-bold">Reimaginar judô para o mundo moderno</h2>
             <p class="text-xl text-gray-600 leading-relaxed font-light">
                 Judoka Pro transforma o aprendizado de judô em uma jornada gamificada, inspirada nos melhores apps de educação. <span class="font-semibold text-gray-900">Somos mais fortes juntos.</span>
             </p>
@@ -719,21 +735,37 @@
             showToast('Abrindo LinkedIn...');
         }
 
-        // NOVO: Função para Instagram
-        function shareOnInstagram() {
-            const text = `Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar? https://vezzoniguilherme.github.io/JudokaPro/`;
-            
-            // Copia o texto para a área de transferência
-            navigator.clipboard.writeText(text).then(() => {
-                showToast('📋 Texto copiado! Abrindo Instagram...');
-                // Aguarda um momento para o usuário ler o toast e abre o Instagram
-                setTimeout(() => {
+        // ATUALIZADO: Função para Instagram com Web Share API
+        async function shareOnInstagram() {
+            const shareData = {
+                title: 'Judoka Pro',
+                text: 'Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar?',
+                url: 'https://vezzoniguilherme.github.io/JudokaPro/'
+            };
+
+            // Tenta usar o compartilhamento nativo do celular (Android/iOS)
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                    showToast('✅ Menu de compartilhamento aberto!');
+                } catch (err) {
+                    // Se o usuário cancelar ou der erro, não faz nada ou loga o erro
+                    console.log('Compartilhamento cancelado ou falhou', err);
+                }
+            } else {
+                // Fallback para Desktop ou navegadores sem suporte (copia e abre instagram)
+                const textToCopy = `${shareData.text} ${shareData.url}`;
+                
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showToast('📋 Texto copiado! Abrindo Instagram...', false);
+                    setTimeout(() => {
+                        window.open('https://instagram.com', '_blank');
+                    }, 1000);
+                }).catch(() => {
+                    showToast('❌ Erro ao copiar. Tente manualmente.', true);
                     window.open('https://instagram.com', '_blank');
-                }, 1000);
-            }).catch(() => {
-                showToast('❌ Erro ao copiar. Tente manualmente.', true);
-                window.open('https://instagram.com', '_blank');
-            });
+                });
+            }
         }
 
         function copyPosition() {
