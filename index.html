@@ -737,36 +737,41 @@
 
         // ATUALIZADO: Função para Instagram com Web Share API
         async function shareOnInstagram() {
-            const shareData = {
-                title: 'Judoka Pro',
-                text: 'Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar?',
-                url: 'https://vezzoniguilherme.github.io/JudokaPro/'
-            };
+    const shareData = {
+        title: 'Judoka Pro',
+        text: 'Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar?',
+        url: 'https://vezzoniguilherme.github.io/JudokaPro/'
+    };
 
-            // Tenta usar o compartilhamento nativo do celular (Android/iOS)
-            if (navigator.share) {
-                try {
-                    await navigator.share(shareData);
-                    showToast('✅ Menu de compartilhamento aberto!');
-                } catch (err) {
-                    // Se o usuário cancelar ou der erro, não faz nada ou loga o erro
-                    console.log('Compartilhamento cancelado ou falhou', err);
-                }
-            } else {
-                // Fallback para Desktop ou navegadores sem suporte (copia e abre instagram)
-                const textToCopy = `${shareData.text} ${shareData.url}`;
-                
-                navigator.clipboard.writeText(textToCopy).then(() => {
-                    showToast('📋 Texto copiado! Abrindo Instagram...', false);
-                    setTimeout(() => {
-                        window.open('https://instagram.com', '_blank');
-                    }, 1000);
-                }).catch(() => {
-                    showToast('❌ Erro ao copiar. Tente manualmente.', true);
-                    window.open('https://instagram.com', '_blank');
-                });
-            }
+    // Verifica se é um dispositivo móvel
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    // Lógica: Só usa o menu nativo se for CELULAR e tiver suporte.
+    // No computador, vamos direto para o "Copiar", pois o menu nativo do Windows/Mac não posta no Instagram.
+    if (isMobileDevice && navigator.share) {
+        try {
+            await navigator.share(shareData);
+            showToast('✅ Menu de compartilhamento aberto!');
+        } catch (err) {
+            console.log('Compartilhamento cancelado');
         }
+    } else {
+        // Comportamento para Computador (Desktop)
+        const textToCopy = `${shareData.text} ${shareData.url}`;
+        
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            // Mensagem específica para Desktop
+            showToast('📋 Link copiado! (Stories funciona melhor no celular)', false);
+            
+            // Opcional: Abrir o Instagram para a pessoa colar no Direct ou Feed
+            setTimeout(() => {
+                window.open('https://instagram.com', '_blank');
+            }, 2000);
+        }).catch(() => {
+            showToast('❌ Erro ao copiar.', true);
+        });
+    }
+}
 
         function copyPosition() {
             const text = `Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar? https://vezzoniguilherme.github.io/JudokaPro/`;
