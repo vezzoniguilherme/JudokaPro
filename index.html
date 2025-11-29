@@ -1,10 +1,10 @@
-<!   DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1. 0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Judoka Pro - Aprenda Judô como um Videogame</title>
-    <meta name="description" content="Judoka Pro: O app gamificado para aprender judô.   Streaks, missões, rankings e comunidade.  Inscreva-se na lista de espera e ganhe 50% de desconto vitalício.  ">
+    <meta name="description" content="Judoka Pro: O app gamificado para aprender judô. Streaks, missões, rankings e comunidade. Inscreva-se na lista de espera e garanta condições diferenciadas.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -14,52 +14,36 @@
             font-family: 'Inter', sans-serif;
         }
 
+        /* Navbar Styles */
+        .nav-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes slideUp {
-            from {
-                transform: translateY(40px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         @keyframes slideInRight {
-            from {
-                transform: translateX(40px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+            from { transform: translateX(40px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
+            to { transform: rotate(360deg); }
         }
 
         .fade-in {
@@ -67,7 +51,7 @@
             opacity: 0;
         }
 
-        .fade-in.  visible {
+        .fade-in.visible {
             opacity: 1;
         }
 
@@ -76,7 +60,7 @@
             opacity: 0;
         }
 
-        .slide-in-right. visible {
+        .slide-in-right.visible {
             opacity: 1;
         }
 
@@ -94,6 +78,7 @@
 
         body {
             background: #ffffff;
+            padding-top: 80px; /* Space for fixed navbar */
         }
 
         .btn-hover-shadow {
@@ -105,16 +90,16 @@
             transform: translateY(-4px);
         }
 
-        .  card-hover {
+        .card-hover {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        . card-hover:hover {
+        .card-hover:hover {
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
             transform: translateY(-8px);
         }
 
-        .  faq-answer {
+        .faq-answer {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease-in-out;
@@ -149,15 +134,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        .social-btn i {
-            font-size: 1.25rem;
-        }
-
-        .social-btn img {
-            width: 1. 25rem;
-            height: 1.25rem;
-        }
-
         .toast {
             position: fixed;
             bottom: 20px;
@@ -171,11 +147,11 @@
             max-width: 300px;
         }
 
-        .  toast.error {
+        .toast.error {
             background: #ef4444;
         }
 
-        . footer-social {
+        .footer-social {
             transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
@@ -190,41 +166,9 @@
             transform: translateY(-3px);
         }
 
-        .footer-social.  twitter:hover {
-            background: #000000;
-            color: white;
-        }
+        /* Mantendo apenas as cores necessárias */
+        .footer-social.instagram:hover { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
 
-        .footer-social. facebook:hover {
-            background: #1877F2;
-            color: white;
-        }
-
-        .footer-social.linkedin:hover {
-            background: #0A66C2;
-            color: white;
-        }
-
-        . footer-social.instagram:hover {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            color: white;
-        }
-
-        .  footer-social. youtube:hover {
-            background: #FF0000;
-            color: white;
-        }
-
-        . footer-social i {
-            font-size: 1.5rem;
-        }
-
-        .footer-social img {
-            width: 1. 5rem;
-            height: 1.5rem;
-        }
-
-        /* Premium gradient backgrounds */
         .gradient-hero {
             background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
         }
@@ -233,29 +177,17 @@
             background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
         }
 
-        /* Premium typography */
-        h1 {
-            font-weight: 800;
-            letter-spacing: -0.02em;
-        }
+        h1 { font-weight: 800; letter-spacing: -0.02em; }
+        h2 { font-weight: 700; letter-spacing: -0.01em; }
+        h3 { font-weight: 600; }
 
-        h2 {
-            font-weight: 700;
-            letter-spacing: -0.01em;
-        }
-
-        h3 {
-            font-weight: 600;
-        }
-
-        . text-gradient {
+        .text-gradient {
             background: linear-gradient(135deg, #dc2626, #b91c1c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        /* Premium button styles */
         .btn-primary {
             background: linear-gradient(135deg, #dc2626, #b91c1c);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -268,15 +200,14 @@
             transform: translateY(-4px);
         }
 
-        .  btn-primary:active {
+        .btn-primary:active {
             transform: translateY(-2px);
         }
 
-        /* Card premium style */
         .card-premium {
             border-radius: 16px;
             border: 1px solid #e5e7eb;
-            transition: all 0.4s cubic-bezier(0.  4, 0, 0.  2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             background: white;
         }
 
@@ -285,7 +216,6 @@
             box-shadow: 0 20px 40px rgba(220, 38, 38, 0.08);
         }
 
-        /* Section spacing */
         .section-spacing {
             padding: 100px 4% 100px;
         }
@@ -296,7 +226,6 @@
             }
         }
 
-        /* Badge style */
         .badge {
             display: inline-block;
             padding: 8px 16px;
@@ -307,7 +236,7 @@
             color: #dc2626;
         }
 
-        .  badge-light {
+        .badge-light {
             background: rgba(59, 130, 246, 0.1);
             color: #3b82f6;
         }
@@ -318,12 +247,40 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
+        
+        /* Nav Link Hover */
+        .nav-link {
+            position: relative;
+            color: #374151;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #dc2626;
+        }
     </style>
 </head>
-<body class="bg-white text-gray-900">
-    <!-- ===== HERO SECTION ===== -->
+<body class="text-gray-900">
+
+    <nav class="nav-fixed w-full px-6 py-4 flex justify-between items-center" id="main-nav">
+        <a href="#hero" class="flex items-center gap-2 group cursor-pointer">
+            <span class="text-2xl font-black tracking-tighter text-gray-900 group-hover:text-red-600 transition-colors">JUDOKA PRO</span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+            <a href="#about" class="nav-link">Sobre</a>
+            <a href="#pillars" class="nav-link">Pilares</a>
+            <a href="#features" class="nav-link">Recursos</a>
+            <a href="#faq" class="nav-link">FAQ</a>
+        </div>
+
+        <button onclick="document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' })" class="bg-gray-900 text-white px-5 py-2.5 rounded-lg font-semibold text-sm hover:bg-red-600 transition shadow-lg">
+            Lista de Espera
+        </button>
+    </nav>
+
     <section class="gradient-hero min-h-screen flex items-center justify-center px-4 py-20 fade-in relative overflow-hidden" id="hero">
-        <!-- Decorative elements -->
         <div class="absolute top-0 right-0 w-96 h-96 bg-red-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -z-10"></div>
         <div class="absolute bottom-0 left-0 w-96 h-96 bg-red-50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -z-10"></div>
         
@@ -344,25 +301,23 @@
                 <button onclick="document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' })" class="btn-primary text-white px-8 py-4 rounded-lg font-semibold text-lg btn-hover-shadow">
                     Entrar na Lista de Espera
                 </button>
-                <button onclick="document.getElementById('about').   scrollIntoView({ behavior: 'smooth' })" class="bg-gray-100 text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition">
+                <button onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' })" class="bg-gray-100 text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition">
                     Saiba Mais
                 </button>
             </div>
         </div>
     </section>
 
-    <!-- ===== MISSION SECTION ===== -->
     <section class="section-spacing bg-white fade-in" id="about">
         <div class="max-w-3xl mx-auto text-center">
             <span class="badge badge-light mb-4 inline-block">Nosso Propósito</span>
             <h2 class="text-5xl md:text-6xl font-bold mb-8">Reimaginar judô para o mundo moderno</h2>
             <p class="text-xl text-gray-600 leading-relaxed font-light">
-                Judoka Pro transforma o aprendizado de judô em uma jornada gamificada, inspirada nos melhores apps de educação.    <span class="font-semibold text-gray-900">Somos mais fortes juntos.  </span>
+                Judoka Pro transforma o aprendizado de judô em uma jornada gamificada, inspirada nos melhores apps de educação. <span class="font-semibold text-gray-900">Somos mais fortes juntos.</span>
             </p>
         </div>
     </section>
 
-    <!-- ===== PILLARS SECTION ===== -->
     <section class="section-spacing bg-gradient-to-b from-gray-50 to-white fade-in" id="pillars">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
@@ -371,25 +326,22 @@
             </div>
             
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Pilar 1 -->
                 <div class="card-premium p-8 card-hover">
                     <div class="text-6xl mb-6">🥋</div>
                     <h3 class="text-2xl font-bold mb-3">Judô Progressivo</h3>
                     <p class="text-gray-600 leading-relaxed">
-                        Currículo estruturado do branco ao preto.    Aprenda técnicas fundamentais e avançadas no seu próprio ritmo.
+                        Currículo estruturado de todas as faixas. Aprenda técnicas fundamentais e avançadas no seu próprio ritmo.
                     </p>
                 </div>
                 
-                <!-- Pilar 2 -->
                 <div class="card-premium p-8 card-hover">
                     <div class="text-6xl mb-6">🎮</div>
                     <h3 class="text-2xl font-bold mb-3">Gamificação Real</h3>
                     <p class="text-gray-600 leading-relaxed">
-                        Streaks, missões diárias, rankings e badges. Cada aula é uma vitória.    Mantenha sua sequência viva.   
+                        Streaks, missões diárias, rankings e badges. Cada aula é uma vitória. Mantenha sua sequência viva.
                     </p>
                 </div>
                 
-                <!-- Pilar 3 -->
                 <div class="card-premium p-8 card-hover">
                     <div class="text-6xl mb-6">👥</div>
                     <h3 class="text-2xl font-bold mb-3">Comunidade Forte</h3>
@@ -401,7 +353,6 @@
         </div>
     </section>
 
-    <!-- ===== FEATURES SECTION ===== -->
     <section class="section-spacing bg-white fade-in" id="features">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
@@ -410,20 +361,18 @@
             </div>
             
             <div class="grid md:grid-cols-2 gap-8">
-                <!-- Feature 1 -->
                 <div class="card-premium p-10 card-hover">
                     <div class="flex items-start gap-6">
                         <div class="text-5xl">🔥</div>
                         <div>
                             <h3 class="text-2xl font-bold mb-2">Streaks Diárias</h3>
                             <p class="text-gray-600">
-                                Mantenha sua sequência de treino.    Quanto mais dias seguidos, maiores as recompensas e desafios.
+                                Mantenha sua sequência de treino. Quanto mais dias seguidos, maiores as recompensas e desafios.
                             </p>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Feature 2 -->
                 <div class="card-premium p-10 card-hover">
                     <div class="flex items-start gap-6">
                         <div class="text-5xl">📋</div>
@@ -436,7 +385,6 @@
                     </div>
                 </div>
                 
-                <!-- Feature 3 -->
                 <div class="card-premium p-10 card-hover">
                     <div class="flex items-start gap-6">
                         <div class="text-5xl">🏆</div>
@@ -449,14 +397,13 @@
                     </div>
                 </div>
                 
-                <!-- Feature 4 -->
                 <div class="card-premium p-10 card-hover">
                     <div class="flex items-start gap-6">
                         <div class="text-5xl">📚</div>
                         <div>
                             <h3 class="text-2xl font-bold mb-2">Biblioteca de Técnicas</h3>
                             <p class="text-gray-600">
-                                Vídeos, animações e guias detalhados. Acesso a mais de 200 técnicas de judô com explicações passo a passo.
+                                Vídeos, animações e guias detalhados. Acesso a diversas técnicas de judô com explicações passo a passo.
                             </p>
                         </div>
                     </div>
@@ -465,61 +412,6 @@
         </div>
     </section>
 
-    <!-- ===== TESTIMONIALS SECTION ===== -->
-    <section class="section-spacing bg-gradient-to-b from-gray-50 to-white fade-in" id="testimonials">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <span class="badge mb-4 inline-block">Depoimentos</span>
-                <h2 class="text-5xl md:text-6xl font-bold">O que instrutores dizem</h2>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div class="card-premium p-10 card-hover">
-                    <div class="mb-6">
-                        <div class="w-16 h-16 rounded-full gradient-accent flex items-center justify-center text-4xl text-white mx-auto mb-4">🥋</div>
-                    </div>
-                    <p class="text-gray-700 italic mb-6 leading-relaxed">
-                        "Judoka Pro revolucionou como meus alunos aprendem. A gamificação mantém todos engajados e motivados."
-                    </p>
-                    <div class="border-t pt-4">
-                        <p class="font-bold text-gray-900">Carlos Silva</p>
-                        <p class="text-sm text-gray-500">Instrutor de Judô, São Paulo</p>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 2 -->
-                <div class="card-premium p-10 card-hover">
-                    <div class="mb-6">
-                        <div class="w-16 h-16 rounded-full gradient-accent flex items-center justify-center text-4xl text-white mx-auto mb-4">👩‍🏫</div>
-                    </div>
-                    <p class="text-gray-700 italic mb-6 leading-relaxed">
-                        "Finalmente uma ferramenta que torna o judô acessível para iniciantes.    Meus alunos amam os desafios diários."
-                    </p>
-                    <div class="border-t pt-4">
-                        <p class="font-bold text-gray-900">Marina Costa</p>
-                        <p class="text-sm text-gray-500">Professora de Judô, Rio de Janeiro</p>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 3 -->
-                <div class="card-premium p-10 card-hover">
-                    <div class="mb-6">
-                        <div class="w-16 h-16 rounded-full gradient-accent flex items-center justify-center text-4xl text-white mx-auto mb-4">🏅</div>
-                    </div>
-                    <p class="text-gray-700 italic mb-6 leading-relaxed">
-                        "A comunidade é incrível.    Meus alunos competem, aprendem e crescem juntos.    Isso é o futuro do judô."
-                    </p>
-                    <div class="border-t pt-4">
-                        <p class="font-bold text-gray-900">Rafael Martins</p>
-                        <p class="text-sm text-gray-500">Técnico Competitivo, Brasília</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== URGENCY SECTION ===== -->
     <section class="gradient-accent text-white py-24 px-4 fade-in relative overflow-hidden" id="urgency">
         <div class="absolute inset-0 opacity-10">
             <div class="absolute top-0 right-0 w-96 h-96 bg-white rounded-full mix-blend-multiply filter blur-3xl"></div>
@@ -528,34 +420,34 @@
         <div class="max-w-4xl mx-auto text-center relative z-10">
             <h2 class="text-5xl md:text-6xl font-bold mb-12">Oferta Limitada para Pioneiros</h2>
             
-            <div class="grid md:grid-cols-2 gap-12 mb-12">
-                <div class="glass rounded-2xl p-8">
-                    <h3 class="text-6xl font-bold mb-3">1.  000</h3>
-                    <p class="text-xl opacity-90">Vagas Disponíveis</p>
+            <div class="grid md:grid-cols-2 gap-8 md:gap-12 mb-12">
+                <div class="bg-white rounded-2xl p-8 shadow-xl transform transition hover:-translate-y-1">
+                    <h3 class="text-4xl md:text-5xl font-bold mb-3 text-red-700">Vagas Limitadas</h3>
+                    <p class="text-xl text-gray-800 font-medium">Para a lista de espera</p>
                 </div>
-                <div class="glass rounded-2xl p-8">
-                    <h3 class="text-6xl font-bold mb-3">50%</h3>
-                    <p class="text-xl opacity-90">Desconto Vitalício</p>
+                
+                <div class="bg-white rounded-2xl p-8 shadow-xl transform transition hover:-translate-y-1">
+                    <h3 class="text-4xl md:text-5xl font-bold mb-3 text-red-700">Benefícios</h3>
+                    <p class="text-xl text-gray-800 font-medium">Condições diferenciadas</p>
                 </div>
             </div>
             
-            <p class="text-xl mb-8 opacity-95 leading-relaxed max-w-2xl mx-auto">
-                Seja um dos primeiros.    Inscreva-se na lista de espera e garanta seu desconto permanente quando lançarmos.   
+            <p class="text-xl mb-8 opacity-95 leading-relaxed max-w-2xl mx-auto font-medium">
+                Seja um dos primeiros. Inscreva-se na lista de espera e garanta condições diferenciadas quando lançarmos.
             </p>
             
-            <button onclick="document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' })" class="bg-white text-red-600 px-8 py-4 rounded-lg font-semibold text-lg btn-hover-shadow">
+            <button onclick="document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' })" class="bg-white text-red-600 px-8 py-4 rounded-lg font-bold text-lg btn-hover-shadow border-2 border-white hover:bg-gray-100">
                 Garantir Minha Vaga
             </button>
         </div>
     </section>
 
-    <!-- ===== FORM SECTION ===== -->
     <section class="section-spacing bg-gradient-to-b from-gray-50 to-white fade-in" id="form-section">
         <div class="max-w-md mx-auto">
             <div class="text-center mb-12">
                 <span class="badge mb-4 inline-block">Lista de Espera</span>
                 <h2 class="text-4xl font-bold">Inscreva-se agora</h2>
-                <p class="text-gray-600 mt-4">Ganhe acesso prioritário e 50% de desconto vitalício</p>
+                <p class="text-gray-600 mt-4">Ganhe acesso prioritário e condições diferenciadas.</p>
             </div>
             
             <form id="waitlist-form" class="card-premium p-8 space-y-6">
@@ -564,8 +456,8 @@
                     <input type="email" id="email" name="email" placeholder="seu@email.com" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-100 transition bg-gray-50">
                 </div>
                 <div>
-                    <label for="name" class="block font-semibold text-gray-900 mb-2 text-sm">Nome</label>
-                    <input type="text" id="name" name="name" placeholder="Seu nome (opcional)" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-100 transition bg-gray-50">
+                    <label for="name" class="block font-semibold text-gray-900 mb-2 text-sm">Nome *</label>
+                    <input type="text" id="name" name="name" placeholder="Seu nome" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-100 transition bg-gray-50">
                 </div>
                 <div>
                     <label for="referral" class="block font-semibold text-gray-900 mb-2 text-sm">Como você conheceu o Judoka Pro?</label>
@@ -578,7 +470,6 @@
         </div>
     </section>
 
-    <!-- ===== FAQ SECTION ===== -->
     <section class="section-spacing bg-white fade-in" id="faq">
         <div class="max-w-3xl mx-auto">
             <div class="text-center mb-16">
@@ -587,122 +478,109 @@
             </div>
             
             <div class="space-y-4">
-                <!-- FAQ 1 -->
                 <div class="card-premium rounded-lg overflow-hidden">
                     <button onclick="toggleFaq(this)" class="w-full px-6 py-4 flex justify-between items-center font-semibold text-gray-900 hover:text-red-600 hover:bg-gray-50 transition cursor-pointer">
-                        <span>Quando o Judoka Pro vai lançar?   </span>
+                        <span>Quando o Judoka Pro será lançado?</span>
                         <span class="faq-toggle text-2xl">▼</span>
                     </button>
                     <div class="faq-answer px-6 pb-4 text-gray-600 border-t border-gray-200">
-                        <p>Estamos em fase final de desenvolvimento.   Os inscritos na lista de espera serão os primeiros a acessar, com lançamento previsto para Q2 2026.</p>
+                        <p>Estamos em fase de desenvolvimento. Os inscritos na lista de espera serão os primeiros a acessar, com lançamento previsto para o primeiro trimestre de 2026.</p>
                     </div>
                 </div>
 
-                <!-- FAQ 2 -->
                 <div class="card-premium rounded-lg overflow-hidden">
                     <button onclick="toggleFaq(this)" class="w-full px-6 py-4 flex justify-between items-center font-semibold text-gray-900 hover:text-red-600 hover:bg-gray-50 transition cursor-pointer">
-                        <span>Qual será o preço?  </span>
+                        <span>Qual será o preço?</span>
                         <span class="faq-toggle text-2xl">▼</span>
                     </button>
                     <div class="faq-answer px-6 pb-4 text-gray-600 border-t border-gray-200">
-                        <p>Ainda estamos definindo o modelo de preços. Porém, todos os inscritos na lista de espera ganham 50% de desconto vitalício, independente do preço final.</p>
+                        <p>Estamos definindo o modelo de preços. Porém, todos os inscritos na lista de espera terão condições especiais, independente do preço final.</p>
                     </div>
                 </div>
 
-                <!-- FAQ 3 -->
                 <div class="card-premium rounded-lg overflow-hidden">
                     <button onclick="toggleFaq(this)" class="w-full px-6 py-4 flex justify-between items-center font-semibold text-gray-900 hover:text-red-600 hover:bg-gray-50 transition cursor-pointer">
-                        <span>Judoka Pro é para iniciantes? </span>
+                        <span>Judoka Pro é para iniciantes?</span>
                         <span class="faq-toggle text-2xl">▼</span>
                     </button>
                     <div class="faq-answer px-6 pb-4 text-gray-600 border-t border-gray-200">
-                        <p>Sim!    Judoka Pro é para iniciantes e experientes.  O currículo é progressivo, começando com fundamentos e evoluindo para técnicas avançadas.    Todos aprendem no seu próprio ritmo.</p>
+                        <p>Sim! Judoka Pro é para iniciantes e experientes. O currículo é progressivo, começando com fundamentos e evoluindo para técnicas avançadas. Todos aprendem no seu próprio ritmo.</p>
                     </div>
                 </div>
 
-                <!-- FAQ 4 -->
                 <div class="card-premium rounded-lg overflow-hidden">
                     <button onclick="toggleFaq(this)" class="w-full px-6 py-4 flex justify-between items-center font-semibold text-gray-900 hover:text-red-600 hover:bg-gray-50 transition cursor-pointer">
-                        <span>Como funcionam os Streaks? </span>
+                        <span>Como funcionam os Streaks?</span>
                         <span class="faq-toggle text-2xl">▼</span>
                     </button>
                     <div class="faq-answer px-6 pb-4 text-gray-600 border-t border-gray-200">
-                        <p>Um Streak é uma sequência de dias em que você completa uma aula ou missão.    Quanto mais dias seguidos, maiores as recompensas.  Se perder um dia, sua sequência reseta, mas você pode começar uma nova.</p>
+                        <p>Um Streak é uma sequência de dias em que você completa uma aula ou missão. Quanto mais dias seguidos, maiores as recompensas. Se perder um dia, sua sequência reseta, mas você pode começar uma nova.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
     <footer class="bg-gray-900 text-white py-16 px-4 fade-in">
         <div class="max-w-6xl mx-auto text-center">
             <div class="flex justify-center gap-6 mb-8">
-                <a href="#" class="footer-social instagram text-white" title="Instagram">
+                <a href="https://instagram.com/vezzoniguilherme" target="_blank" class="footer-social instagram text-white" title="Instagram">
                     <i class="fab fa-instagram"></i>
-                </a>
-                <a href="#" class="footer-social twitter text-white" title="X">
-                    <img src="https://share.google/images/8LPAgxqK1zjmFXAsk" alt="X" style="filter: invert(1);">
-                </a>
-                <a href="#" class="footer-social linkedin text-white" title="LinkedIn">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="#" class="footer-social youtube text-white" title="YouTube">
-                    <i class="fab fa-youtube"></i>
                 </a>
             </div>
             <p class="text-gray-400 text-sm">
-                © 2025 Judoka Pro. Todos os direitos reservados.  |
-                <a href="#" class="hover:text-red-600 transition">Privacidade</a> |
-                <a href="#" class="hover:text-red-600 transition">Termos</a>
+                © 2025 Judoka Pro. Todos os direitos reservados.
             </p>
         </div>
     </footer>
 
-    <!-- ===== SUCCESS MODAL ===== -->
     <div id="success-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-2xl p-8 md:p-12 max-w-md w-full modal-slide relative">
             <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-900 text-3xl">✕</button>
             
             <div class="text-6xl text-center mb-6">✅</div>
             <h2 class="text-3xl font-bold text-center mb-4">Bem-vindo ao Judoka Pro!</h2>
-            <p class="text-gray-600 text-center mb-4">Você está oficialmente na lista de espera.   </p>
-            
-            <div class="text-6xl font-bold text-gradient text-center mb-6" id="modal-position">#1</div>
+            <p class="text-gray-600 text-center mb-4">Você está oficialmente na lista de espera.</p>
             
             <p class="text-gray-600 text-center mb-8">
-                Você será notificado quando lançarmos.    Enquanto isso, compartilhe sua posição!   
+                Você será notificado quando lançarmos. Enquanto isso, compartilhe a novidade!
             </p>
 
-            <!-- COMPARTILHAMENTO EM REDES SOCIAIS -->
             <div class="space-y-4 mb-6">
-                <p class="text-sm text-gray-600 font-semibold text-center">Compartilhe sua posição:</p>
+                <p class="text-sm text-gray-600 font-semibold text-center">Compartilhe com amigos:</p>
                 
                 <div class="grid grid-cols-2 gap-2">
-                    <button onclick="shareOnTwitter()" class="social-btn bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition">
-                        <img src="https://share.google/images/8LPAgxqK1zjmFXAsk" alt="X" style="filter: invert(1);">
-                        <span>X</span>
+                    <button onclick="shareOnInstagram()" class="social-btn bg-pink-600 text-white py-2 rounded-lg hover:bg-pink-700 transition">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
                     </button>
-                    
+
                     <button onclick="shareOnWhatsapp()" class="social-btn bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">
                         <i class="fab fa-whatsapp"></i>
                         <span>WhatsApp</span>
+                    </button>
+
+                    <button onclick="shareOnTwitter()" class="social-btn bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition">
+                        <i class="fa-brands fa-x-twitter"></i>
+                        <span>X</span>
                     </button>
                     
                     <button onclick="shareOnFacebook()" class="social-btn bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
                         <i class="fab fa-facebook-f"></i>
                         <span>Facebook</span>
                     </button>
-                    
+                </div>
+                
+                <div class="grid grid-cols-1 mt-2">
                     <button onclick="shareOnLinkedIn()" class="social-btn bg-blue-700 text-white py-2 rounded-lg hover:bg-blue-800 transition">
                         <i class="fab fa-linkedin-in"></i>
                         <span>LinkedIn</span>
                     </button>
                 </div>
 
-                <button onclick="copyPosition()" class="w-full bg-gray-200 text-gray-900 py-2 rounded-lg hover:bg-gray-300 transition text-sm font-semibold social-btn justify-center">
+                <button onclick="copyPosition()" class="w-full bg-gray-200 text-gray-900 py-2 rounded-lg hover:bg-gray-300 transition text-sm font-semibold social-btn justify-center mt-2">
                     <i class="fas fa-copy"></i>
-                    <span>Copiar Posição</span>
+                    <span>Copiar Link</span>
                 </button>
             </div>
 
@@ -721,46 +599,45 @@
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry. isIntersecting) {
+                if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    observer.unobserve(entry.  target);
+                    observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('. fade-in, .slide-in-right').  forEach(el => {
+        document.querySelectorAll('.fade-in, .slide-in-right').forEach(el => {
             observer.observe(el);
         });
 
         // ===== FORM HANDLING WITH GOOGLE FORMS =====
         const form = document.getElementById('waitlist-form');
-        let userPosition = 0;
-
+        
         const GOOGLE_FORM_ID = '1FAIpQLSc7IHPmmLpyCPacfIIVdfabZ8YKLP_j39v87FlXAt2TvxAENQ';
         const GOOGLE_FORM_URL = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`;
 
         const FIELD_MAPPING = {
             email: 'entry.1676730741',
-            name: 'entry.  1903800697',
-            referral: 'entry. 1662379727'
+            name: 'entry.1903800697',
+            referral: 'entry.1662379727'
         };
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const email = document.getElementById('email').value;
-            const name = document. getElementById('name'). value;
-            const referral = document.getElementById('referral'). value;
+            const name = document.getElementById('name').value;
+            const referral = document.getElementById('referral').value;
             const submitBtn = form.querySelector('button[type="submit"]');
 
-            if (!email) {
-                alert('Por favor, preencha o campo de email.');
+            if (!email || !name) {
+                alert('Por favor, preencha os campos obrigatórios (Email e Nome).');
                 return;
             }
 
             submitBtn.disabled = true;
             const originalText = submitBtn.textContent;
-            submitBtn.innerHTML = '<span class="flex items-center justify-center gap-2"><svg class="spinner w-5 h-5" xmlns="http://www.w3.  org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Processando...  </span>';
+            submitBtn.innerHTML = '<span class="flex items-center justify-center gap-2"><svg class="spinner w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Processando...</span>';
 
             try {
                 const formData = new FormData();
@@ -774,14 +651,11 @@
                     mode: 'no-cors'
                 });
 
-                userPosition = Math.floor(Math.random() * 1000) + 1;
-
-                document.getElementById('modal-position').textContent = `#${userPosition}`;
                 document.getElementById('success-modal').classList.remove('hidden');
 
                 form.reset();
-                submitBtn.  disabled = false;
-                submitBtn.  textContent = originalText;
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
 
             } catch (error) {
                 console.error('Error:', error);
@@ -797,60 +671,77 @@
         }
 
         document.getElementById('success-modal').addEventListener('click', (e) => {
-            if (e.target.  id === 'success-modal') {
+            if (e.target.id === 'success-modal') {
                 closeModal();
             }
         });
 
         // ===== DETECT MOBILE =====
         function isMobile() {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator. userAgent);
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         }
 
         // ===== SHARE FUNCTIONS =====
         function shareOnTwitter() {
-            const text = `Estou na posição #${userPosition} da lista de espera do Judoka Pro!  🥋 Aprenda judô como um videogame.   Você também quer entrar?   https://judokapro.com`;
+            const text = `Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar? https://vezzoniguilherme.github.io/JudokaPro/`;
             const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
             window.open(url, '_blank');
-            showToast('Abrindo X..  .');
+            showToast('Abrindo X...');
         }
 
         function shareOnWhatsapp() {
-            const text = `Estou na posição #${userPosition} da lista de espera do Judoka Pro!  🥋 Aprenda judô como um videogame.  Você também quer entrar?  https://judokapro.com`;
+            const text = `Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar? https://vezzoniguilherme.github.io/JudokaPro/`;
             
             if (isMobile()) {
-                const url = `whatsapp://send?  text=${encodeURIComponent(text)}`;
+                const url = `whatsapp://send?text=${encodeURIComponent(text)}`;
                 window.location.href = url;
             } else {
                 const url = `https://web.whatsapp.com/send?text=${encodeURIComponent(text)}`;
-                window.  open(url, '_blank');
+                window.open(url, '_blank');
             }
-            showToast('Abrindo WhatsApp.. .');
+            showToast('Abrindo WhatsApp...');
         }
 
         function shareOnFacebook() {
-            const url = 'https://judokapro.com';
-            const quote = `Estou na posição #${userPosition} da lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar? `;
-            const facebookUrl = `https://www. facebook.  com/sharer/sharer.  php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(quote)}`;
-            window.  open(facebookUrl, '_blank');
-            showToast('Abrindo Facebook.. .');
+            const url = 'https://vezzoniguilherme.github.io/JudokaPro/';
+            const quote = `Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar?`;
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(quote)}`;
+            window.open(facebookUrl, '_blank');
+            showToast('Abrindo Facebook...');
         }
 
         function shareOnLinkedIn() {
-            const url = 'https://judokapro.com';
+            const url = 'https://vezzoniguilherme.github.io/JudokaPro/';
             const title = 'Judoka Pro';
-            const summary = `Estou na posição #${userPosition} da lista de espera do Judoka Pro!   🥋 Aprenda judô como um videogame.   Você também quer entrar?  `;
-            const linkedInUrl = `https://www.  linkedin. com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(summary)}`;
-            window. open(linkedInUrl, '_blank');
+            const summary = `Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar?`;
+            const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(summary)}`;
+            window.open(linkedInUrl, '_blank');
             showToast('Abrindo LinkedIn...');
         }
 
-        function copyPosition() {
-            const text = `Estou na posição #${userPosition} da lista de espera do Judoka Pro!  🥋 Aprenda judô como um videogame.  Você também quer entrar?   https://judokapro.com`;
-            navigator.clipboard.writeText(text).  then(() => {
-                showToast('✅ Posição copiada para a área de transferência! ');
+        // NOVO: Função para Instagram
+        function shareOnInstagram() {
+            const text = `Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar? https://vezzoniguilherme.github.io/JudokaPro/`;
+            
+            // Copia o texto para a área de transferência
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('📋 Texto copiado! Abrindo Instagram...');
+                // Aguarda um momento para o usuário ler o toast e abre o Instagram
+                setTimeout(() => {
+                    window.open('https://instagram.com', '_blank');
+                }, 1000);
             }).catch(() => {
-                showToast('❌ Erro ao copiar.   Tente novamente.  ', true);
+                showToast('❌ Erro ao copiar. Tente manualmente.', true);
+                window.open('https://instagram.com', '_blank');
+            });
+        }
+
+        function copyPosition() {
+            const text = `Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar? https://vezzoniguilherme.github.io/JudokaPro/`;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('✅ Link copiado!');
+            }).catch(() => {
+                showToast('❌ Erro ao copiar. Tente novamente.', true);
             });
         }
 
@@ -869,17 +760,17 @@
         // ===== FAQ TOGGLE =====
         function toggleFaq(button) {
             const answer = button.nextElementSibling;
-            const toggle = button.querySelector('. faq-toggle');
+            const toggle = button.querySelector('.faq-toggle');
 
             document.querySelectorAll('.faq-answer').forEach(el => {
                 if (el !== answer) {
-                    el.  classList.remove('open');
+                    el.classList.remove('open');
                 }
             });
 
             document.querySelectorAll('.faq-toggle').forEach(el => {
                 if (el !== toggle) {
-                    el. classList.remove('open');
+                    el.classList.remove('open');
                 }
             });
 
