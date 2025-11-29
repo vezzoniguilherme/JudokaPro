@@ -368,7 +368,7 @@
             <div class="space-y-4 mb-6">
                 <p class="text-sm text-gray-600 font-semibold">Compartilhe sua posição:</p>
                 <div class="flex gap-3 justify-center">
-                    <button onclick="shareOnTwitter()" class="flex-1 bg-blue-400 text-white py-2 rounded-lg hover:bg-blue-500 transition text-sm font-semibold">
+                    <button onclick="openShareModal()" class="flex-1 bg-blue-400 text-white py-2 rounded-lg hover:bg-blue-500 transition text-sm font-semibold">
                         Compartilhar
                     </button>
                     <button onclick="copyPosition()" class="flex-1 bg-gray-200 text-gray-900 py-2 rounded-lg hover:bg-gray-300 transition text-sm font-semibold">
@@ -481,23 +481,103 @@
         }
 
         // Close modal when clicking outside
-        document.getElementById('success-modal').addEventListener('click', (e) => {
+            <!-- Share Options Modal -->
+    <div id="share-options-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4">
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-bold text-slate-900 mb-2">Compartilhe! 🥋</h3>
+                <p class="text-slate-600">Você é o <span class="font-bold text-teal-600">#<span id="share-position">-</span></span> na fila</p>
+            </div>
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <button onclick="shareOnTwitter()" class="flex flex-col items-center gap-2 p-4 rounded-xl bg-blue-50 hover:bg-blue-100 transition">
+                    <svg class="w-8 h-8 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M8 2H1l8.26 11.23L1.97 22h7.02l6.47-8.36L21 22h7L13.46 10.96 20.07 2h-7.02L9.5 10.88 8 2zm9 18h2L7 4h-2l10 16z"/></svg>
+                    <span class="text-xs font-semibold">Twitter</span>
+                </button>
+                <button onclick="shareOnWhatsApp()" class="flex flex-col items-center gap-2 p-4 rounded-xl bg-green-50 hover:bg-green-100 transition">
+                    <svg class="w-8 h-8 text-green-500" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004c-1.417 0-2.815.356-4.038 1.03l-.289.153-2.994-.747.761 2.752-.177.281c-.746 1.289-1.139 2.786-1.139 4.313 0 4.411 3.6 8.011 8.011 8.011h.002c2.142 0 4.163-.839 5.684-2.358l.203-.203 3.003.747-.748-2.752.162-.254c.831-1.318 1.276-2.847 1.276-4.447 0-4.411-3.6-8.011-8.011-8.011"/></svg>
+                    <span class="text-xs font-semibold">WhatsApp</span>
+                </button>
+                <button onclick="shareOnFacebook()" class="flex flex-col items-center gap-2 p-4 rounded-xl bg-blue-100 hover:bg-blue-200 transition">
+                    <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    <span class="text-xs font-semibold">Facebook</span>
+                </button>
+                <button onclick="shareOnLinkedIn()" class="flex flex-col items-center gap-2 p-4 rounded-xl bg-blue-50 hover:bg-blue-100 transition">
+                    <svg class="w-8 h-8 text-blue-700" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+                    <span class="text-xs font-semibold">LinkedIn</span>
+                </button>
+                <button onclick="shareOnInstagram()" class="flex flex-col items-center gap-2 p-4 rounded-xl bg-pink-50 hover:bg-pink-100 transition">
+                    <svg class="w-8 h-8 text-pink-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.322a1.44 1.44 0 110-2.881 1.44 1.44 0 010 2.881z"/></svg>
+                    <span class="text-xs font-semibold">Instagram</span>
+                </button>
+                <button onclick="copyPosition()" class="flex flex-col items-center gap-2 p-4 rounded-xl bg-gray-100 hover:bg-gray-200 transition">
+                    <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    <span class="text-xs font-semibold">Copiar</span>
+                </button>
+            </div>
+            <button onclick="closeShareModal()" class="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition font-semibold">Fechar</button>
+        </div>
+    </div>
+
+    document.getElementById('success-modal').addEventListener('click', (e) => {
             if (e.target.id === 'success-modal') {
                 closeModal();
             }
         });
 
+        // Close share modal when clicking outside
+        document.getElementById('share-options-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'share-options-modal') {
+                closeShareModal();
+            }
+        });
+
         // ===== SHARE FUNCTIONS =====
+        function openShareModal() {
+            document.getElementById('share-options-modal').classList.remove('hidden');
+            document.getElementById('share-position').textContent = userPosition;
+        }
+
+        function closeShareModal() {
+            document.getElementById('share-options-modal').classList.add('hidden');
+        }
+
         function shareOnTwitter() {
-            const text = `Estou na posição #${userPosition} da lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar? https://judokapro.com`;
+            const text = `Estou na posição #${userPosition} da lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. https://judokapro.com`;
             const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
             window.open(url, '_blank');
+            closeShareModal();
+        }
+
+        function shareOnWhatsApp() {
+            const text = `Estou na posição #${userPosition} da lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar? https://judokapro.com`;
+            const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+            closeShareModal();
+        }
+
+        function shareOnFacebook() {
+            const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://judokapro.com')}`;
+            window.open(url, '_blank');
+            closeShareModal();
+        }
+
+        function shareOnLinkedIn() {
+            const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://judokapro.com')}`;
+            window.open(url, '_blank');
+            closeShareModal();
+        }
+
+        function shareOnInstagram() {
+            const text = `Estou na posição #${userPosition} da lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Acesse: judokapro.com`;
+            alert('Para compartilhar no Instagram:\n\n' + text + '\n\nCopie o texto e compartilhe nos Stories ou Reels!');
+            closeShareModal();
         }
 
         function copyPosition() {
             const text = `Estou na posição #${userPosition} da lista de espera do Judoka Pro! 🥋`;
             navigator.clipboard.writeText(text).then(() => {
                 alert('Posição copiada para a área de transferência!');
+                closeShareModal();
             });
         }
 
