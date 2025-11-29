@@ -736,40 +736,41 @@
         }
 
         // ATUALIZADO: Função para Instagram com Web Share API
-        async function shareOnInstagram() {
-    const shareData = {
-        title: 'Judoka Pro',
-        text: 'Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar?',
-        url: 'https://vezzoniguilherme.github.io/JudokaPro/'
-    };
+async function shareOnInstagram() {
+    // O texto formatado que vai para o Story
+    const textToShare = "Acabei de entrar na lista de espera do Judoka Pro! 🥋\n\nAprenda judô como um videogame.\n\nGaranta sua vaga: https://vezzoniguilherme.github.io/JudokaPro/";
 
-    // Verifica se é um dispositivo móvel
-    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    // Lógica: Só usa o menu nativo se for CELULAR e tiver suporte.
-    // No computador, vamos direto para o "Copiar", pois o menu nativo do Windows/Mac não posta no Instagram.
-    if (isMobileDevice && navigator.share) {
-        try {
-            await navigator.share(shareData);
-            showToast('✅ Menu de compartilhamento aberto!');
-        } catch (err) {
-            console.log('Compartilhamento cancelado');
-        }
-    } else {
-        // Comportamento para Computador (Desktop)
-        const textToCopy = `${shareData.text} ${shareData.url}`;
+    // Tenta copiar o texto para a área de transferência
+    try {
+        await navigator.clipboard.writeText(textToShare);
         
-        navigator.clipboard.writeText(textToCopy).then(() => {
-            // Mensagem específica para Desktop
-            showToast('📋 Link copiado! (Stories funciona melhor no celular)', false);
+        if (isMobile) {
+            showToast('📋 Texto copiado! Cole no seu Story.');
             
-            // Opcional: Abrir o Instagram para a pessoa colar no Direct ou Feed
+            // Tenta abrir direto na câmera do Story (Funciona na maioria dos celulares)
+            // Se falhar, abre o app do Instagram normal
             setTimeout(() => {
-                window.open('https://instagram.com', '_blank');
-            }, 2000);
-        }).catch(() => {
-            showToast('❌ Erro ao copiar.', true);
-        });
+                window.location.href = "instagram://story-camera";
+            }, 500);
+            
+            // Fallback caso o deep link não funcione após 2 segundos
+            setTimeout(() => {
+                if (document.hidden) return; // Se o usuário já saiu, não faz nada
+                window.open("https://instagram.com", "_blank");
+            }, 2500);
+            
+        } else {
+            // Desktop
+            showToast('📋 Texto copiado! Abra o Instagram para postar.', false);
+            setTimeout(() => {
+                window.open("https://instagram.com", "_blank");
+            }, 1500);
+        }
+    } catch (err) {
+        console.error('Erro ao copiar', err);
+        showToast('❌ Erro ao copiar texto.', true);
     }
 }
 
