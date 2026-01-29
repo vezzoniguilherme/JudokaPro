@@ -1,37 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Judoka Pro - Aprenda Judô como um Videogame</title>
-    <meta name="description" content="Judoka Pro: O app gamificado para aprender judô. Streaks, missões, rankings e comunidade. Inscreva-se na lista de espera e garanta condições diferenciadas.">
-    
-    <!-- META TAGS PARA REDES SOCIAIS (ATUALIZADO) -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://judokapro.com.br/">
-    <meta property="og:title" content="Judoka Pro - Aprenda Judô como um Videogame">
-    <meta property="og:description" content="O app gamificado para aprender judô. Streaks, missões e rankings. Inscreva-se na lista de espera!">
-    <!-- Atenção: Certifique-se que o arquivo na pasta assets é .png mesmo -->
-    <meta property="og:image" content="https://judokapro.com.br/assets/social-preview.png">
+    <meta name="description" content="Judoka Pro: O app gamificado para aprender judô. Streaks, missões, rankings e comunidade. Inscreva-se na lista de espera e garanta condições diferenciadas." />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://judokapro.com.br/">
-    <meta name="twitter:title" content="Judoka Pro - Aprenda Judô como um Videogame">
-    <meta name="twitter:description" content="O app gamificado para aprender judô. Streaks, missões e rankings.">
-    <meta name="twitter:image" content="https://judokapro.com.br/assets/social-preview.png">
-    <!-- FIM DAS META TAGS -->
+    <!-- META TAGS PARA REDES SOCIAIS -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://judokapro.com.br/" />
+    <meta property="og:title" content="Judoka Pro - Aprenda Judô como um Videogame" />
+    <meta property="og:description" content="O app gamificado para aprender judô. Streaks, missões e rankings. Inscreva-se na lista de espera!" />
+    <meta property="og:image" content="https://judokapro.com.br/assets/social-preview.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://judokapro.com.br/" />
+    <meta name="twitter:title" content="Judoka Pro - Aprenda Judô como um Videogame" />
+    <meta name="twitter:description" content="O app gamificado para aprender judô. Streaks, missões e rankings." />
+    <meta name="twitter:image" content="https://judokapro.com.br/assets/social-preview.png" />
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-        * {
-            font-family: 'Inter', sans-serif;
-        }
+        * { font-family: 'Inter', sans-serif; }
 
-        /* Navbar Styles */
+        /* Nav fixed */
         .nav-fixed {
             position: fixed;
             top: 0;
@@ -39,243 +35,102 @@
             right: 0;
             z-index: 50;
             transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255,255,255,0.8);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: translateY(0);} }
+        @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes slideInRight { from { transform: translateX(40px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        @keyframes slideUp {
-            from { transform: translateY(40px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; opacity: 0; }
+        .fade-in.visible { opacity: 1; }
+        .slide-in-right { animation: slideInRight 0.8s ease-out forwards; opacity: 0; }
+        .slide-in-right.visible { opacity: 1; }
+        .modal-slide { animation: slideUp 0.3s ease; }
+        .spinner { animation: spin 0.6s linear infinite; }
 
-        @keyframes slideInRight {
-            from { transform: translateX(40px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
+        html { scroll-behavior: smooth; }
+        body { background: #ffffff; padding-top: 80px; }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        .btn-hover-shadow { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+        .btn-hover-shadow:hover { box-shadow: 0 20px 40px rgba(220,38,38,0.25); transform: translateY(-4px); }
 
-        .fade-in {
-            animation: fadeIn 0.8s ease-out forwards;
-            opacity: 0;
-        }
+        .card-hover { transition: all 0.4s cubic-bezier(0.4,0,0.2,1); }
+        .card-hover:hover { box-shadow: 0 25px 50px rgba(0,0,0,0.1); transform: translateY(-8px); }
 
-        .fade-in.visible {
-            opacity: 1;
-        }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out; opacity: 0; }
+        .faq-answer.open { max-height: 500px; opacity: 1; }
+        .faq-toggle { transition: transform 0.3s ease; display: inline-block; }
+        .faq-toggle.open { transform: rotate(180deg); }
 
-        .slide-in-right {
-            animation: slideInRight 0.8s ease-out forwards;
-            opacity: 0;
-        }
+        .social-btn { transition: all 0.3s ease; display: flex; align-items:center; justify-content:center; gap:0.5rem; font-size:0.875rem; }
+        .social-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 
-        .slide-in-right.visible {
-            opacity: 1;
-        }
+        .toast { position: fixed; bottom: 20px; right: 20px; background: #10b981; color: white; padding: 12px 20px; border-radius: 8px; z-index: 100; animation: slideUp 0.3s ease; max-width: 360px; }
+        .toast.error { background: #ef4444; }
 
-        .modal-slide {
-            animation: slideUp 0.3s ease;
-        }
+        .footer-social { transition: all 0.3s ease; display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; cursor:pointer; }
+        .footer-social.instagram:hover { background: linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); color:white; }
 
-        .spinner {
-            animation: spin 0.6s linear infinite;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: #ffffff;
-            padding-top: 80px; /* Space for fixed navbar */
-        }
-
-        .btn-hover-shadow {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .btn-hover-shadow:hover {
-            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.25);
-            transform: translateY(-4px);
-        }
-
-        .card-hover {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .card-hover:hover {
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
-            transform: translateY(-8px);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-in-out;
-            opacity: 0;
-        }
-
-        .faq-answer.open {
-            max-height: 500px;
-            opacity: 1;
-        }
-
-        .faq-toggle {
-            transition: transform 0.3s ease;
-            display: inline-block;
-        }
-
-        .faq-toggle.open {
-            transform: rotate(180deg);
-        }
-
-        .social-btn {
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-        }
-
-        .social-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #10b981;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            z-index: 100;
-            animation: slideUp 0.3s ease;
-            max-width: 360px;
-        }
-
-        .toast.error {
-            background: #ef4444;
-        }
-
-        .footer-social {
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .footer-social:hover {
-            transform: translateY(-3px);
-        }
-
-        /* Mantendo apenas as cores necessárias */
-        .footer-social.instagram:hover { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
-
-        .gradient-hero {
-            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-        }
-
-        .gradient-accent {
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-        }
+        .gradient-hero { background: linear-gradient(135deg,#ffffff 0%,#f5f5f5 100%); }
+        .gradient-accent { background: linear-gradient(135deg,#dc2626 0%,#b91c1c 100%); }
 
         h1 { font-weight: 800; letter-spacing: -0.02em; }
         h2 { font-weight: 700; letter-spacing: -0.01em; }
         h3 { font-weight: 600; }
 
-        .text-gradient {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+        .text-gradient { background: linear-gradient(135deg,#dc2626,#b91c1c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
         .btn-primary {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(135deg,#dc2626,#b91c1c);
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
             font-weight: 600;
             letter-spacing: 0.5px;
         }
+        .btn-primary:hover { box-shadow: 0 20px 40px rgba(220,38,38,0.3); transform: translateY(-4px); }
+        .btn-primary:active { transform: translateY(-2px); }
 
-        .btn-primary:hover {
-            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.3);
-            transform: translateY(-4px);
+        .card-premium { border-radius: 16px; border: 1px solid #e5e7eb; transition: all 0.4s cubic-bezier(0.4,0,0.2,1); background:white; }
+        .card-premium:hover { border-color: #dc2626; box-shadow: 0 20px 40px rgba(220,38,38,0.08); }
+
+        .section-spacing { padding: 100px 4% 100px; }
+        @media (max-width:768px) { .section-spacing { padding: 60px 4% 60px; } }
+
+        .badge { display:inline-block; padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 600; background: rgba(220,38,38,0.1); color:#dc2626; }
+        .badge-light { background: rgba(59,130,246,0.1); color: #3b82f6; }
+
+        /* Waitlist button unified style */
+        .btn-waitlist {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-align: center;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            padding-top: 0.9rem;
+            padding-bottom: 0.9rem;
+            line-height: 1.05;
+            white-space: normal;
         }
-
-        .btn-primary:active {
-            transform: translateY(-2px);
+        .btn-waitlist .lead {
+            font-size: 1.375rem; /* ~22px */
         }
-
-        .card-premium {
-            border-radius: 16px;
-            border: 1px solid #e5e7eb;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            background: white;
-        }
-
-        .card-premium:hover {
-            border-color: #dc2626;
-            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.08);
-        }
-
-        .section-spacing {
-            padding: 100px 4% 100px;
-        }
-
-        @media (max-width: 768px) {
-            .section-spacing {
-                padding: 60px 4% 60px;
-            }
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            background: rgba(220, 38, 38, 0.1);
-            color: #dc2626;
+        @media(min-width:768px) {
+            .btn-waitlist .lead { font-size: 1.75rem; /* ~28px */ }
+            .btn-waitlist .sub { font-size: 1.05rem; }
         }
 
-        .badge-light {
-            background: rgba(59, 130, 246, 0.1);
-            color: #3b82f6;
-        }
+        .btn-waitlist .sub { color: rgba(255,255,255,0.95); font-weight:600; }
+        .btn-waitlist .sub.small { font-size: 0.95rem; opacity: 0.95; }
 
-        /* Glassmorphism effect */
-        .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        /* Nav Link Hover */
-        .nav-link {
-            position: relative;
-            color: #374151;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-link:hover {
-            color: #dc2626;
-        }
+        .glass { background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.2); }
+        .nav-link { position: relative; color: #374151; font-weight:500; transition: color 0.3s; }
+        .nav-link:hover { color:#dc2626; }
     </style>
 </head>
 <body class="text-gray-900">
@@ -300,24 +155,30 @@
     <section class="gradient-hero min-h-screen flex items-center justify-center px-4 py-20 fade-in relative overflow-hidden" id="hero">
         <div class="absolute top-0 right-0 w-96 h-96 bg-red-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -z-10"></div>
         <div class="absolute bottom-0 left-0 w-96 h-96 bg-red-50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -z-10"></div>
-        
+
         <div class="max-w-4xl text-center relative z-10">
             <div class="mb-6 inline-block">
                 <span class="badge">🚀 Gamificação de Judô</span>
             </div>
-            
+
             <h1 class="text-6xl md:text-7xl font-bold mb-6 leading-tight text-gray-900">
                 Aprenda judô<br><span class="text-gradient">como um videogame</span>
             </h1>
-            
+
             <p class="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed font-light max-w-2xl mx-auto">
-                Streaks, missões, rankings e comunidade. Gamificação real para o aprendizado de judô.  
+                Streaks, missões, rankings e comunidade. Gamificação real para o aprendizado de judô.
             </p>
-            
+
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button onclick="document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' })" class="btn-primary text-white px-8 py-4 rounded-lg font-semibold text-lg btn-hover-shadow">
-                    Entrar na Lista de Espera — <span style="display:inline-block">Acesso antecipado</span><br><span style="display:inline-block">+ desconto vitalício na conta Premium</span>
+                <!-- Unified waitlist button -->
+                <button onclick="document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' })"
+                        class="btn-primary btn-waitlist text-white rounded-lg font-semibold btn-hover-shadow"
+                        aria-label="Entrar na Lista de Espera - Acesso antecipado + desconto vitalício na conta Premium">
+                    <span class="lead">Entrar na Lista de Espera</span>
+                    <span class="sub small">Acesso antecipado</span>
+                    <span class="sub">+ desconto vitalício na conta Premium</span>
                 </button>
+
                 <button onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' })" class="bg-gray-100 text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition">
                     Saiba Mais
                 </button>
@@ -333,9 +194,9 @@
                 Judoka Pro transforma o aprendizado de judô em uma jornada gamificada, inspirada nos melhores apps de educação. <span class="font-semibold text-gray-900">Somos mais fortes juntos.</span>
             </p>
 
-            <!-- Nova linha solicitada pelo usuário -->
-            <p class="text-gray-600 mt-6">
-                Judokapro é para:<br>
+            <!-- Requested block styled like the "Reimaginar..." heading -->
+            <h2 class="text-5xl md:text-6xl font-bold mt-8">Judokapro é para:</h2>
+            <p class="text-gray-600 mt-4 text-lg leading-relaxed">
                 ✔ Alunos iniciantes e avançados<br>
                 ✔ Professores de judô<br>
                 ✔ Pais que desejam acompanhar a evolução dos filhos<br>
@@ -350,7 +211,7 @@
                 <span class="badge mb-4 inline-block">Os 3 Pilares</span>
                 <h2 class="text-5xl md:text-6xl font-bold">Construído sobre fundações sólidas</h2>
             </div>
-            
+
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="card-premium p-8 card-hover">
                     <div class="text-6xl mb-6">🥋</div>
@@ -359,7 +220,7 @@
                         Currículo estruturado de todas as faixas. Aprenda técnicas fundamentais e avançadas no seu próprio ritmo.
                     </p>
                 </div>
-                
+
                 <div class="card-premium p-8 card-hover">
                     <div class="text-6xl mb-6">🎮</div>
                     <h3 class="text-2xl font-bold mb-3">Gamificação Real</h3>
@@ -367,7 +228,7 @@
                         Streaks, missões diárias, rankings e badges. Cada aula é uma vitória. Mantenha sua sequência viva.
                     </p>
                 </div>
-                
+
                 <div class="card-premium p-8 card-hover">
                     <div class="text-6xl mb-6">👥</div>
                     <h3 class="text-2xl font-bold mb-3">Comunidade Forte</h3>
@@ -385,7 +246,7 @@
                 <span class="badge mb-4 inline-block">Recursos</span>
                 <h2 class="text-5xl md:text-6xl font-bold">Tudo que você precisa para evoluir</h2>
             </div>
-            
+
             <div class="grid md:grid-cols-2 gap-8">
                 <div class="card-premium p-10 card-hover">
                     <div class="flex items-start gap-6">
@@ -398,7 +259,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="card-premium p-10 card-hover">
                     <div class="flex items-start gap-6">
                         <div class="text-5xl">📋</div>
@@ -410,7 +271,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="card-premium p-10 card-hover">
                     <div class="flex items-start gap-6">
                         <div class="text-5xl">🏆</div>
@@ -422,7 +283,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="card-premium p-10 card-hover">
                     <div class="flex items-start gap-6">
                         <div class="text-5xl">📚</div>
@@ -442,16 +303,16 @@
         <div class="absolute inset-0 opacity-10">
             <div class="absolute top-0 right-0 w-96 h-96 bg-white rounded-full mix-blend-multiply filter blur-3xl"></div>
         </div>
-        
+
         <div class="max-w-4xl mx-auto text-center relative z-10">
             <h2 class="text-5xl md:text-6xl font-bold mb-12">Oferta Limitada para Pioneiros</h2>
-            
+
             <div class="grid md:grid-cols-2 gap-8 md:gap-12 mb-12">
                 <div class="bg-white rounded-2xl p-8 shadow-xl transform transition hover:-translate-y-1">
                     <h3 class="text-4xl md:text-5xl font-bold mb-3 text-red-700">Vagas Limitadas</h3>
                     <p class="text-xl text-gray-800 font-medium">Para a lista de espera</p>
                 </div>
-                
+
                 <div class="bg-white rounded-2xl p-8 shadow-xl transform transition hover:-translate-y-1">
                     <h3 class="text-4xl md:text-5xl font-bold mb-3 text-red-700">Benefícios</h3>
                     <p class="text-xl text-gray-800 font-medium">
@@ -459,11 +320,11 @@
                     </p>
                 </div>
             </div>
-            
+
             <p class="text-xl mb-8 opacity-95 leading-relaxed max-w-2xl mx-auto font-medium">
                 Seja um dos primeiros. Inscreva-se na lista de espera e garanta condições diferenciadas quando lançarmos.
             </p>
-            
+
             <button onclick="document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' })" class="bg-white text-red-600 px-8 py-4 rounded-lg font-bold text-lg btn-hover-shadow border-2 border-white hover:bg-gray-100">
                 Garantir Minha Vaga
             </button>
@@ -479,29 +340,33 @@
                     Ganhe acesso antecipado ao app e desconto vitalício na conta premium para os primeiros inscritos.
                 </p>
             </div>
-            
+
             <form id="waitlist-form" class="card-premium p-8 space-y-6">
                 <div>
                     <label for="email" class="block font-semibold text-gray-900 mb-2 text-sm">Email *</label>
-                    <input type="email" id="email" name="email" placeholder="seu@email.com" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-100 transition bg-gray-50">
-                </div>
-                <div>
-                    <label for="name" class="block font-semibold text-gray-900 mb-2 text-sm">Nome *</label>
-                    <input type="text" id="name" name="name" placeholder="Seu nome" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-100 transition bg-gray-50">
-                </div>
-                <div>
-                    <label for="referral" class="block font-semibold text-gray-900 mb-2 text-sm">Como você conheceu o Judoka Pro?</label>
-                    <input type="text" id="referral" name="referral" placeholder="Referência (opcional)" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-100 transition bg-gray-50">
+                    <input type="email" id="email" name="email" placeholder="seu@email.com" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-100 transition bg-gray-50" />
                 </div>
 
-                <!-- Novo campo de sugestão -->
+                <div>
+                    <label for="name" class="block font-semibold text-gray-900 mb-2 text-sm">Nome *</label>
+                    <input type="text" id="name" name="name" placeholder="Seu nome" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-100 transition bg-gray-50" />
+                </div>
+
+                <div>
+                    <label for="referral" class="block font-semibold text-gray-900 mb-2 text-sm">Como você conheceu o Judoka Pro?</label>
+                    <input type="text" id="referral" name="referral" placeholder="Referência (opcional)" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-100 transition bg-gray-50" />
+                </div>
+
                 <div>
                     <label for="suggestion" class="block font-semibold text-gray-900 mb-2 text-sm">Deixe sua sugestão para o app</label>
                     <textarea id="suggestion" name="suggestion" rows="4" placeholder="O que você gostaria de ver no Judoka Pro? (opcional)" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-100 transition bg-gray-50"></textarea>
                 </div>
 
-                <button type="submit" class="btn-primary text-white w-full py-4 rounded-lg font-semibold text-lg btn-hover-shadow">
-                    Entrar na Lista de Espera — <span style="display:inline-block">Acesso antecipado</span><br><span style="display:inline-block">+ desconto vitalício na conta Premium</span>
+                <!-- Unified submit button (same appearance as hero waitlist button) -->
+                <button type="submit" class="btn-primary btn-waitlist text-white w-full rounded-lg font-semibold btn-hover-shadow" aria-label="Entrar na Lista de Espera - Acesso antecipado + desconto vitalício na conta Premium">
+                    <span class="lead">Entrar na Lista de Espera</span>
+                    <span class="sub small">Acesso antecipado</span>
+                    <span class="sub">+ desconto vitalício na conta Premium</span>
                 </button>
             </form>
         </div>
@@ -513,7 +378,7 @@
                 <span class="badge mb-4 inline-block">Dúvidas</span>
                 <h2 class="text-5xl md:text-6xl font-bold">Perguntas Frequentes</h2>
             </div>
-            
+
             <div class="space-y-4">
                 <div class="card-premium rounded-lg overflow-hidden">
                     <button onclick="toggleFaq(this)" class="w-full px-6 py-4 flex justify-between items-center font-semibold text-gray-900 hover:text-red-600 hover:bg-gray-50 transition cursor-pointer">
@@ -555,8 +420,7 @@
                     </div>
                 </div>
 
-                <!-- NOVAS PERGUNTAS ADICIONADAS PELO USUÁRIO -->
-
+                <!-- New user-requested FAQ items -->
                 <div class="card-premium rounded-lg overflow-hidden">
                     <button onclick="toggleFaq(this)" class="w-full px-6 py-4 flex justify-between items-center font-semibold text-gray-900 hover:text-red-600 hover:bg-gray-50 transition cursor-pointer">
                         <span>Por que entrar na lista de espera AGORA?</span>
@@ -621,23 +485,22 @@
     <div id="success-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-2xl p-8 md:p-12 max-w-md w-full modal-slide relative">
             <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-900 text-3xl">✕</button>
-            
+
             <div class="text-6xl text-center mb-6">✅</div>
             <h2 class="text-3xl font-bold text-center mb-4">Bem-vindo ao Judoka Pro!</h2>
             <p class="text-gray-600 text-center mb-4">Você está oficialmente na lista de espera.</p>
 
-            <!-- Benefício resumido incluído no modal -->
             <p class="text-gray-800 font-semibold text-center mb-4">
                 Benefício para pioneiros: Acesso antecipado ao app e desconto vitalício na conta premium.
             </p>
-            
+
             <p class="text-gray-600 text-center mb-8">
                 Você será notificado quando lançarmos. Enquanto isso, compartilhe a novidade!
             </p>
 
             <div class="space-y-4 mb-6">
                 <p class="text-sm text-gray-600 font-semibold text-center">Compartilhe com amigos:</p>
-                
+
                 <div class="grid grid-cols-2 gap-2">
                     <button onclick="shareOnInstagram()" class="social-btn bg-pink-600 text-white py-2 rounded-lg hover:bg-pink-700 transition">
                         <i class="fab fa-instagram"></i>
@@ -653,13 +516,13 @@
                         <i class="fa-brands fa-x-twitter"></i>
                         <span>X</span>
                     </button>
-                    
+
                     <button onclick="shareOnFacebook()" class="social-btn bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
                         <i class="fab fa-facebook-f"></i>
                         <span>Facebook</span>
                     </button>
                 </div>
-                
+
                 <div class="grid grid-cols-1 mt-2">
                     <button onclick="shareOnLinkedIn()" class="social-btn bg-blue-700 text-white py-2 rounded-lg hover:bg-blue-800 transition">
                         <i class="fab fa-linkedin-in"></i>
@@ -681,11 +544,7 @@
 
     <script>
         // ===== SCROLL ANIMATIONS =====
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -694,14 +553,11 @@
                 }
             });
         }, observerOptions);
-
-        document.querySelectorAll('.fade-in, .slide-in-right').forEach(el => {
-            observer.observe(el);
-        });
+        document.querySelectorAll('.fade-in, .slide-in-right').forEach(el => observer.observe(el));
 
         // ===== FORM HANDLING WITH GOOGLE FORMS =====
         const form = document.getElementById('waitlist-form');
-        
+
         const GOOGLE_FORM_ID = '1FAIpQLSc7IHPmmLpyCPacfIIVdfabZ8YKLP_j39v87FlXAt2TvxAENQ';
         const GOOGLE_FORM_URL = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`;
 
@@ -712,7 +568,7 @@
             suggestion: 'entry.2022549739'
         };
 
-        // Mensagem curta que aparecerá em toasts e modal para lembrar o benefício
+        // Short benefit text shown in toasts
         const BENEFIT_TEXT_SHORT = 'Acesso antecipado + desconto vitalício na conta premium para os primeiros inscritos.';
 
         form.addEventListener('submit', async (e) => {
@@ -730,7 +586,7 @@
             }
 
             submitBtn.disabled = true;
-            const originalText = submitBtn.textContent;
+            const originalHTML = submitBtn.innerHTML;
             submitBtn.innerHTML = '<span class="flex items-center justify-center gap-2"><svg class="spinner w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Processando...</span>';
 
             try {
@@ -738,85 +594,51 @@
                 formData.append(FIELD_MAPPING.email, email);
                 if (name) formData.append(FIELD_MAPPING.name, name);
                 if (referral) formData.append(FIELD_MAPPING.referral, referral);
+                if (suggestion) formData.append(FIELD_MAPPING.suggestion, suggestion);
 
-                // Adiciona sugestão (se houver) usando o entry ID fornecido
-                if (suggestion) {
-                    formData.append(FIELD_MAPPING.suggestion, suggestion);
-                }
+                await fetch(GOOGLE_FORM_URL, { method: 'POST', body: formData, mode: 'no-cors' });
 
-                // Envia para o Google Forms (no-cors). Mesmo que não possamos ler a resposta,
-                // consideramos o envio realizado e mostramos confirmação ao usuário.
-                await fetch(GOOGLE_FORM_URL, {
-                    method: 'POST',
-                    body: formData,
-                    mode: 'no-cors'
-                });
-
-                // Mostrar toast com o benefício resumido
+                // Show toast and modal with benefit text
                 showToast(`Inscrição confirmada — ${BENEFIT_TEXT_SHORT}`);
 
-                // Mostrar modal de sucesso (já contém o benefício em texto)
                 document.getElementById('success-modal').classList.remove('hidden');
 
                 form.reset();
                 submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
+                submitBtn.innerHTML = originalHTML;
 
             } catch (error) {
                 console.error('Error:', error);
                 showToast('Erro ao processar sua inscrição. Tente novamente.', true);
                 submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
+                submitBtn.innerHTML = originalHTML;
             }
         });
 
         // ===== MODAL HANDLING =====
-        function closeModal() {
-            document.getElementById('success-modal').classList.add('hidden');
-        }
-
+        function closeModal() { document.getElementById('success-modal').classList.add('hidden'); }
         document.getElementById('success-modal').addEventListener('click', (e) => {
-            if (e.target.id === 'success-modal') {
-                closeModal();
-            }
+            if (e.target.id === 'success-modal') closeModal();
         });
 
         // ===== DETECT MOBILE =====
-        function isMobile() {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        }
+        function isMobile() { return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent); }
 
-        // ===== SHARE FUNCTIONS (ATUALIZADO COM BITLY) =====
-        
+        // ===== SHARE FUNCTIONS =====
         const linkApp = "https://judokapro.com.br/";
 
         async function shareOnInstagram() {
             const textToShare = `Acabei de entrar na lista de espera do Judoka Pro! 🥋\n\nAprenda judô como um videogame.\n\nGaranta sua vaga: ${linkApp}`;
-            const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
+            const isMobileDevice = isMobile();
             try {
                 await navigator.clipboard.writeText(textToShare);
-                
                 if (isMobileDevice) {
                     showToast('📋 Texto copiado! Cole no seu Story.');
-                    
-                    // Tenta abrir direto na câmera do Story
-                    setTimeout(() => {
-                        window.location.href = "instagram://story-camera";
-                    }, 500);
-                    
-                    // Fallback caso o deep link não funcione
-                    setTimeout(() => {
-                        if (document.hidden) return;
-                        window.open("https://instagram.com", "_blank");
-                    }, 2500);
-                    
+                    setTimeout(() => { window.location.href = "instagram://story-camera"; }, 500);
+                    setTimeout(() => { if (document.hidden) return; window.open("https://instagram.com", "_blank"); }, 2500);
                 } else {
-                    // Desktop
                     showToast('📋 Texto copiado! Abra o Instagram para postar.', false);
-                    setTimeout(() => {
-                        window.open("https://instagram.com", "_blank");
-                    }, 1500);
+                    setTimeout(() => { window.open("https://instagram.com", "_blank"); }, 1500);
                 }
             } catch (err) {
                 console.error('Erro ao copiar', err);
@@ -827,44 +649,31 @@
         function shareOnTwitter() {
             const text = `Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar? ${linkApp}`;
             const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
-            window.open(url, '_blank');
-            showToast('Abrindo X...');
+            window.open(url, '_blank'); showToast('Abrindo X...');
         }
 
         function shareOnWhatsapp() {
             const text = `Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame. Você também quer entrar? ${linkApp}`;
-            
-            if (isMobile()) {
-                const url = `whatsapp://send?text=${encodeURIComponent(text)}`;
-                window.location.href = url;
-            } else {
-                const url = `https://web.whatsapp.com/send?text=${encodeURIComponent(text)}`;
-                window.open(url, '_blank');
-            }
+            if (isMobile()) window.location.href = `whatsapp://send?text=${encodeURIComponent(text)}`;
+            else window.open(`https://web.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
             showToast('Abrindo WhatsApp...');
         }
 
         function shareOnFacebook() {
             const quote = `Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame.`;
             const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(linkApp)}&quote=${encodeURIComponent(quote)}`;
-            window.open(facebookUrl, '_blank');
-            showToast('Abrindo Facebook...');
+            window.open(facebookUrl, '_blank'); showToast('Abrindo Facebook...');
         }
 
         function shareOnLinkedIn() {
             const title = 'Judoka Pro';
             const summary = `Acabei de entrar na lista de espera do Judoka Pro! 🥋 Aprenda judô como um videogame.`;
             const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(linkApp)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(summary)}`;
-            window.open(linkedInUrl, '_blank');
-            showToast('Abrindo LinkedIn...');
+            window.open(linkedInUrl, '_blank'); showToast('Abrindo LinkedIn...');
         }
 
         function copyPosition() {
-            navigator.clipboard.writeText(linkApp).then(() => {
-                showToast('✅ Link curto copiado!');
-            }).catch(() => {
-                showToast('❌ Erro ao copiar.', true);
-            });
+            navigator.clipboard.writeText(linkApp).then(() => showToast('✅ Link curto copiado!')).catch(() => showToast('❌ Erro ao copiar.', true));
         }
 
         // ===== TOAST NOTIFICATION =====
@@ -873,10 +682,7 @@
             toast.className = `toast ${isError ? 'error' : ''}`;
             toast.textContent = message;
             document.body.appendChild(toast);
-
-            setTimeout(() => {
-                toast.remove();
-            }, 4000);
+            setTimeout(() => toast.remove(), 4000);
         }
 
         // ===== FAQ TOGGLE =====
@@ -884,17 +690,8 @@
             const answer = button.nextElementSibling;
             const toggle = button.querySelector('.faq-toggle');
 
-            document.querySelectorAll('.faq-answer').forEach(el => {
-                if (el !== answer) {
-                    el.classList.remove('open');
-                }
-            });
-
-            document.querySelectorAll('.faq-toggle').forEach(el => {
-                if (el !== toggle) {
-                    el.classList.remove('open');
-                }
-            });
+            document.querySelectorAll('.faq-answer').forEach(el => { if (el !== answer) el.classList.remove('open'); });
+            document.querySelectorAll('.faq-toggle').forEach(el => { if (el !== toggle) el.classList.remove('open'); });
 
             answer.classList.toggle('open');
             toggle.classList.toggle('open');
