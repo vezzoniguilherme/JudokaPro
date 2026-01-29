@@ -480,6 +480,13 @@
                     <label for="referral" class="block font-semibold text-gray-900 mb-2 text-sm">Como você conheceu o Judoka Pro?</label>
                     <input type="text" id="referral" name="referral" placeholder="Referência (opcional)" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-100 transition bg-gray-50">
                 </div>
+
+                <!-- Novo campo de sugestão -->
+                <div>
+                    <label for="suggestion" class="block font-semibold text-gray-900 mb-2 text-sm">Deixe sua sugestão para o app</label>
+                    <textarea id="suggestion" name="suggestion" rows="4" placeholder="O que você gostaria de ver no Judoka Pro? (opcional)" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-100 transition bg-gray-50"></textarea>
+                </div>
+
                 <button type="submit" class="btn-primary text-white w-full py-4 rounded-lg font-semibold text-lg btn-hover-shadow">
                     Entrar na Lista de Espera
                 </button>
@@ -636,7 +643,8 @@
         const FIELD_MAPPING = {
             email: 'entry.1676730741',
             name: 'entry.1903800697',
-            referral: 'entry.1662379727'
+            referral: 'entry.1662379727',
+            suggestion: 'entry.2022549739'
         };
 
         form.addEventListener('submit', async (e) => {
@@ -645,6 +653,7 @@
             const email = document.getElementById('email').value;
             const name = document.getElementById('name').value;
             const referral = document.getElementById('referral').value;
+            const suggestion = document.getElementById('suggestion').value;
             const submitBtn = form.querySelector('button[type="submit"]');
 
             if (!email || !name) {
@@ -661,6 +670,11 @@
                 formData.append(FIELD_MAPPING.email, email);
                 if (name) formData.append(FIELD_MAPPING.name, name);
                 if (referral) formData.append(FIELD_MAPPING.referral, referral);
+
+                // Adiciona sugestão (se houver) usando o entry ID que você forneceu
+                if (suggestion) {
+                    formData.append(FIELD_MAPPING.suggestion, suggestion);
+                }
 
                 const response = await fetch(GOOGLE_FORM_URL, {
                     method: 'POST',
