@@ -161,7 +161,7 @@
             border-radius: 8px;
             z-index: 100;
             animation: slideUp 0.3s ease;
-            max-width: 300px;
+            max-width: 360px;
         }
 
         .toast.error {
@@ -445,7 +445,9 @@
                 
                 <div class="bg-white rounded-2xl p-8 shadow-xl transform transition hover:-translate-y-1">
                     <h3 class="text-4xl md:text-5xl font-bold mb-3 text-red-700">Benefícios</h3>
-                    <p class="text-xl text-gray-800 font-medium">Condições diferenciadas</p>
+                    <p class="text-xl text-gray-800 font-medium">
+                        Acesso antecipado ao app e desconto vitalício na conta premium para os primeiros inscritos.
+                    </p>
                 </div>
             </div>
             
@@ -464,7 +466,9 @@
             <div class="text-center mb-12">
                 <span class="badge mb-4 inline-block">Lista de Espera</span>
                 <h2 class="text-4xl font-bold">Inscreva-se agora</h2>
-                <p class="text-gray-600 mt-4">Ganhe acesso prioritário e condições diferenciadas.</p>
+                <p class="text-gray-600 mt-4">
+                    Ganhe acesso antecipado ao app e desconto vitalício na conta premium para os primeiros inscritos.
+                </p>
             </div>
             
             <form id="waitlist-form" class="card-premium p-8 space-y-6">
@@ -565,6 +569,11 @@
             <div class="text-6xl text-center mb-6">✅</div>
             <h2 class="text-3xl font-bold text-center mb-4">Bem-vindo ao Judoka Pro!</h2>
             <p class="text-gray-600 text-center mb-4">Você está oficialmente na lista de espera.</p>
+
+            <!-- Benefício resumido incluído no modal -->
+            <p class="text-gray-800 font-semibold text-center mb-4">
+                Benefício para pioneiros: Acesso antecipado ao app e desconto vitalício na conta premium.
+            </p>
             
             <p class="text-gray-600 text-center mb-8">
                 Você será notificado quando lançarmos. Enquanto isso, compartilhe a novidade!
@@ -647,6 +656,9 @@
             suggestion: 'entry.2022549739'
         };
 
+        // Mensagem curta que aparecerá em toasts e modal para lembrar o benefício
+        const BENEFIT_TEXT_SHORT = 'Acesso antecipado + desconto vitalício na conta premium para os primeiros inscritos.';
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -671,17 +683,23 @@
                 if (name) formData.append(FIELD_MAPPING.name, name);
                 if (referral) formData.append(FIELD_MAPPING.referral, referral);
 
-                // Adiciona sugestão (se houver) usando o entry ID que você forneceu
+                // Adiciona sugestão (se houver) usando o entry ID fornecido
                 if (suggestion) {
                     formData.append(FIELD_MAPPING.suggestion, suggestion);
                 }
 
-                const response = await fetch(GOOGLE_FORM_URL, {
+                // Envia para o Google Forms (no-cors). Mesmo que não possamos ler a resposta,
+                // consideramos o envio realizado e mostramos confirmação ao usuário.
+                await fetch(GOOGLE_FORM_URL, {
                     method: 'POST',
                     body: formData,
                     mode: 'no-cors'
                 });
 
+                // Mostrar toast com o benefício resumido
+                showToast(`Inscrição confirmada — ${BENEFIT_TEXT_SHORT}`);
+
+                // Mostrar modal de sucesso (já contém o benefício em texto)
                 document.getElementById('success-modal').classList.remove('hidden');
 
                 form.reset();
@@ -690,7 +708,7 @@
 
             } catch (error) {
                 console.error('Error:', error);
-                alert('Erro ao processar sua inscrição. Tente novamente.');
+                showToast('Erro ao processar sua inscrição. Tente novamente.', true);
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;
             }
@@ -802,7 +820,7 @@
 
             setTimeout(() => {
                 toast.remove();
-            }, 3000);
+            }, 4000);
         }
 
         // ===== FAQ TOGGLE =====
